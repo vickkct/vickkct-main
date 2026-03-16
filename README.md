@@ -1,1 +1,0 @@
-# vickkct-main
