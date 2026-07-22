@@ -40,30 +40,12 @@
   },
   "projects": [
     {
-      "name": "Название проекта 1",
-      "description": "Краткое описание проекта. Что это, для чего, какие технологии использовались.",
+      "name": "Is white list?",
+      "description": "Определитель состояния интернета. Кешируется на устройстве и работает без интернета; также можно использовать, скачав html страницу проекта",
       "images": [
-        "https://via.placeholder.com/600x400/7c3aed/ffffff?text=Project+1+Image+1",
-        "https://via.placeholder.com/600x400/6d28d9/ffffff?text=Project+1+Image+2"
+        "iswhitelist.png"
       ],
-      "url": "https://example.com/project1"
-    },
-    {
-      "name": "Название проекта 2",
-      "description": "Еще один крутой проект с описанием функционала и стека технологий.",
-      "images": [
-        "https://via.placeholder.com/600x400/7c3aed/ffffff?text=Project+2+Image+1"
-      ]
-    },
-    {
-      "name": "Название проекта 3",
-      "description": "Третий проект с подробным описанием и ссылкой на демо.",
-      "images": [
-        "https://via.placeholder.com/600x400/7c3aed/ffffff?text=Project+3+Image+1",
-        "https://via.placeholder.com/600x400/6d28d9/ffffff?text=Project+3+Image+2",
-        "https://via.placeholder.com/600x400/5b21b6/ffffff?text=Project+3+Image+3"
-      ],
-      "url": "https://example.com/project3"
+      "url": "https://iswhitelist.vickkct.ru"
     }
   ]
 }

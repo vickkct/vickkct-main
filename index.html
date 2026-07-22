@@ -418,18 +418,18 @@
 
         .project-images img {
             width: 100%;
-            height: 200px;
+            aspect-ratio: 16 / 10;
             object-fit: cover;
             border-radius: 0.75rem;
             border: 1px solid rgba(255, 255, 255, 0.06);
             transition: all 0.3s ease;
         }
 
-        .project-images img:hover {
-            transform: scale(1.02);
-            border-color: var(--primary-color, #7c3aed);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-        }
+        /*.project-images img:hover {*/
+        /*    transform: scale(1.02);*/
+        /*    border-color: var(--primary-color, #7c3aed);*/
+        /*    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);*/
+        /*}*/
 
         .project-link {
             display: inline-flex;
@@ -462,12 +462,12 @@
         }
 
         /* TEMP!! */
-        .projects-section, .about-divider {
-            display: none;
-        }
-        .skills-grid {
-            margin-bottom: 0;
-        }
+        /*.projects-section, .about-divider {*/
+        /*    display: none;*/
+        /*}*/
+        /*.skills-grid {*/
+        /*    margin-bottom: 0;*/
+        /*}*/
         /* TEMP!! */
 
         @media (max-width: 550px) {
@@ -525,7 +525,7 @@
     <div class="header">
         <div class="header-left">
             <div class="avatar-wrapper">
-                <img src="" alt="avatar" class="avatar" id="avatar">
+                <img src="avatar.jpg" alt="avatar" class="avatar" id="avatar">
                 <!-- Ты нашел утку! 🦆 -->
             </div>
             <h1>vickkct</h1>
@@ -553,113 +553,6 @@
 </main>
 
 <script>
-    // --- Аватарка: сначала дефолтная, потом пробуем из ТГ ---
-    const avatar = document.getElementById('avatar');
-    const username = 'vickkct';
-    let defaultAvatarPath = "defaultAvatar.png";
-
-    // Функция для показа эмодзи (если нет даже дефолтной)
-    function showEmojiFallback() {
-        avatar.style.display = 'none';
-        const existingEmoji = avatar.parentNode.querySelector('.avatar:not(img)');
-        if (!existingEmoji) {
-            const emoji = document.createElement('span');
-            emoji.className = 'avatar';
-            emoji.textContent = '👾';
-            emoji.style.fontSize = '2.6rem';
-            emoji.style.lineHeight = '1';
-            emoji.style.filter = 'drop-shadow(0 4px 12px rgba(124, 58, 237, 0.2))';
-            emoji.style.position = 'relative';
-            emoji.style.zIndex = '1';
-            avatar.parentNode.insertBefore(emoji, avatar);
-        }
-    }
-
-    // Функция для показа дефолтной авы из файла
-    function showDefaultAvatar(defaultPath) {
-        avatar.src = defaultPath;
-        avatar.style.display = 'block';
-        const emoji = avatar.parentNode.querySelector('.avatar:not(img)');
-        if (emoji) {
-            emoji.remove();
-        }
-    }
-
-    // Показываем дефолтную аву (если есть) или эмодзи
-    function showInitialAvatar(defaultAvatarPath) {
-        if (defaultAvatarPath) {
-            // Пробуем загрузить дефолтную аву
-            const defaultImg = new Image();
-            defaultImg.src = defaultAvatarPath;
-            defaultImg.onload = function() {
-                showDefaultAvatar(defaultAvatarPath);
-                // После загрузки дефолтной авы пробуем загрузить из ТГ
-                loadTelegramAvatar();
-            };
-            defaultImg.onerror = function() {
-                // Если дефолтная ава не загрузилась — эмодзи
-                showEmojiFallback();
-                // Всё равно пробуем загрузить из ТГ
-                loadTelegramAvatar();
-            };
-        } else {
-            // Если дефолтной нет — эмодзи
-            showEmojiFallback();
-            // Пробуем загрузить из ТГ
-            loadTelegramAvatar();
-        }
-    }
-
-    let avatarLoaded = false;
-    let timeoutId = null;
-    let tgAvatar = null;
-
-    function loadTelegramAvatar() {
-        tgAvatar = new Image();
-        tgAvatar.src = `https://t.me/i/userpic/320/${username}.jpg`;
-
-        tgAvatar.onload = function() {
-            avatarLoaded = true;
-
-            if (timeoutId) {
-                clearTimeout(timeoutId);
-                timeoutId = null;
-            }
-
-            // Заменяем на аву из ТГ
-            const emoji = avatar.parentNode.querySelector('.avatar:not(img)');
-            if (emoji) {
-                emoji.remove();
-            }
-            avatar.src = tgAvatar.src;
-            avatar.style.display = 'block';
-            tgAvatar = null;
-        };
-
-        tgAvatar.onerror = function() {
-            if (timeoutId) {
-                clearTimeout(timeoutId);
-                timeoutId = null;
-            }
-            tgAvatar = null;
-            // Оставляем то, что уже есть (дефолтную аву или эмодзи)
-        };
-    }
-
-    // Таймаут на случай, если запрос к ТГ зависнет (5 секунд)
-    timeoutId = setTimeout(() => {
-        if (!avatarLoaded) {
-            if (tgAvatar) {
-                tgAvatar.src = '';
-                tgAvatar.onload = null;
-                tgAvatar.onerror = null;
-                tgAvatar = null;
-            }
-            // Оставляем то, что уже есть (дефолтную аву или эмодзи)
-        }
-        timeoutId = null;
-    }, 2000);
-
     // Функция для вычисления возраста
     function calculateAge(birthday) {
         const birthDate = new Date(birthday);
@@ -774,7 +667,7 @@
                     <div class="projects-section">
                         <h3>🚀 Проекты</h3>
                         <p class="projects-description">
-                            Все проекты закрытые для использования, но вы можете все равно на них взглянуть, а может быть и предложить мне работу
+                            Возможно, вас заинтересует:
                         </p>
                 `;
 
@@ -848,7 +741,6 @@
     }
 
     loadConfig();
-    showInitialAvatar(defaultAvatarPath);
 </script>
 </body>
 </html>
