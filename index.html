@@ -1,11 +1,854 @@
 <!DOCTYPE html>
 <html lang="ru">
+<!-- Что ты тут ищешь? Закрой и иди куда шел. -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>vickkct page</title>
+    <title>Vickkct</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0d0d0f;
+            padding: 1.5rem;
+            transition: background 0.4s ease;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at 30% 20%, var(--primary-color, #7c3aed) 0%, transparent 70%);
+            opacity: 0.25;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .card {
+            max-width: 780px;
+            width: 100%;
+            background: rgba(20, 20, 26, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 2.5rem;
+            padding: 2.8rem 2.8rem 2.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.7);
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.75rem;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.06);
+            padding-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .header-contacts {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-left: auto;
+        }
+
+        .header-contacts .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 0.3rem 0.8rem;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            text-decoration: none;
+            color: #cdc6db;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .header-contacts .contact-link:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--primary-color, #7c3aed);
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        .avatar-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .avatar-wrapper::before {
+            content: '';
+            position: absolute;
+            inset: -25px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--avatar-border-color, #7c3aed) 0%, transparent 53%);
+            opacity: 0.25;
+            pointer-events: none;
+            filter: blur(12px);
+        }
+
+        .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: #ffffff;
+        }
+
+        .greeting {
+            margin-bottom: 2.2rem;
+        }
+
+        .greeting h2 {
+            font-size: 1.8rem;
+            font-weight: 500;
+            color: #e4e0ed;
+            margin-bottom: 0.5rem;
+        }
+
+        .greeting h2 span {
+            color: var(--primary-color, #7c3aed);
+        }
+
+        .greeting p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #b8b0c9;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 0.7rem 1.2rem;
+            border-radius: 1rem;
+            border-left: 3px solid var(--primary-color, #7c3aed);
+            backdrop-filter: blur(4px);
+            margin-top: 1rem;
+        }
+
+        .links-section {
+            margin-top: 2.2rem;
+        }
+
+        .links-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem 1.2rem;
+            align-items: center;
+        }
+
+        .link-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 0.5rem 1.4rem 0.5rem 1.2rem;
+            border-radius: 60px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.2s ease;
+            text-decoration: none;
+            color: #cdc6db;
+            font-weight: 500;
+            font-size: 0.95rem;
+            backdrop-filter: blur(4px);
+        }
+
+        .link-item i {
+            font-style: normal;
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+
+        .link-item:hover {
+            transform: translateY(-3px) scale(1.02);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--primary-color, #7c3aed);
+            box-shadow: 0 12px 24px -12px rgba(124, 58, 237, 0.25);
+            color: #ffffff;
+        }
+
+        .link-item.telegram {
+            background: rgba(0, 136, 204, 0.08);
+            border-color: rgba(0, 136, 204, 0.15);
+        }
+        .link-item.telegram:hover {
+            background: rgba(0, 136, 204, 0.18);
+            border-color: #0088cc;
+        }
+
+        .link-item.github {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.06);
+        }
+        .link-item.github:hover {
+            background: rgba(255, 255, 255, 0.10);
+            border-color: #ffffff;
+        }
+
+        .link-item.gitlab {
+            background: rgba(252, 109, 38, 0.08);
+            border-color: rgba(252, 109, 38, 0.15);
+        }
+        .link-item.gitlab:hover {
+            background: rgba(252, 109, 38, 0.18);
+            border-color: #fc6d26;
+        }
+
+        .link-item.steam {
+            background: rgba(23, 53, 78, 0.37);
+            border-color: rgba(72, 109, 147, 0.58);
+        }
+        .link-item.steam:hover {
+            background: rgba(28, 75, 113, 0.37);
+            border-color: #4a6b8a;
+        }
+
+        .link-item.osu {
+            background: rgba(214, 87, 187, 0.08);
+            border-color: rgba(214, 87, 187, 0.15);
+        }
+        .link-item.osu:hover {
+            background: rgba(214, 87, 187, 0.18);
+            border-color: #d657bb;
+        }
+
+        .separator {
+            margin: 1.8rem 0 1.2rem;
+            border: 0;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+        }
+
+        /* --- Стили для аккордеона "Обо мне как о программисте" --- */
+        .about-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 1rem;
+            padding: 1rem 1.5rem;
+            color: #e4e0ed;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            margin-top: 2.2rem;
+        }
+
+        .about-toggle:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: var(--primary-color, #7c3aed);
+        }
+
+        .about-toggle .arrow {
+            transition: transform 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .about-toggle .arrow.open {
+            transform: rotate(180deg);
+        }
+
+        .about-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, opacity 0.3s ease, padding 0.3s ease;
+            opacity: 0;
+            padding: 0 0.5rem;
+        }
+
+        .about-content.open {
+            max-height: 5000px;
+            opacity: 1;
+            padding: 1.5rem 0.5rem 0.5rem;
+        }
+
+        /* --- Стили для навыков --- */
+        .skills-section {
+            margin-top: 0;
+        }
+
+        h3 {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #8a7e9e;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            opacity: 0.7;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .skill-category {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 1rem;
+            padding: 1.2rem 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .skill-category:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: var(--primary-color, #7c3aed);
+            transform: translateY(-2px);
+        }
+
+        .skill-category .category-name {
+            color: #e4e0ed;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.6rem;
+            opacity: 0.8;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .skill-tag {
+            background: rgba(255, 255, 255, 0.05);
+            color: #b8b0c9;
+            font-size: 0.8rem;
+            padding: 0.2rem 0.7rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: all 0.2s ease;
+        }
+
+        /*.skill-tag:hover {*/
+        /*    background: rgba(124, 58, 237, 0.1);*/
+        /*    border-color: var(--primary-color, #7c3aed);*/
+        /*    color: #ffffff;*/
+        /*}*/
+
+        /* --- Стили для проектов --- */
+        .projects-section .projects-description {
+            color: #8a7e9e;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .project-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .project-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-description {
+            color: #b8b0c9;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .project-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .project-images img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.3s ease;
+        }
+
+        .project-images img:hover {
+            transform: scale(1.02);
+            border-color: var(--primary-color, #7c3aed);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--primary-color, #7c3aed);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .project-link:hover {
+            opacity: 0.7;
+            transform: translateX(4px);
+        }
+
+        .no-projects {
+            color: #8a7e9e;
+            font-size: 0.95rem;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .about-divider {
+            margin: 2rem 0;
+            border: 0;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+        }
+
+        /* TEMP!! */
+        .projects-section, .about-divider {
+            display: none;
+        }
+        .skills-grid {
+            margin-bottom: 0;
+        }
+        /* TEMP!! */
+
+        @media (max-width: 550px) {
+            .card {
+                padding: 1.8rem 1.2rem;
+                border-radius: 2rem;
+            }
+            .header h1 {
+                font-size: 1.6rem;
+            }
+            .header-contacts {
+                margin-left: 0;
+                width: 100%;
+                flex-wrap: wrap;
+            }
+            .greeting h2 {
+                font-size: 1.5rem;
+            }
+            .greeting p {
+                font-size: 0.95rem;
+                padding: 0.9rem 1rem;
+            }
+            .links-grid {
+                gap: 0.6rem;
+            }
+            .link-item {
+                padding: 0.4rem 1rem 0.4rem 0.9rem;
+                font-size: 0.85rem;
+            }
+            .avatar {
+                width: 40px;
+                height: 40px;
+            }
+            .avatar-wrapper::before {
+                inset: -18px;
+            }
+            .project-images {
+                grid-template-columns: 1fr;
+            }
+            .project-images img {
+                height: 180px;
+            }
+            .about-toggle {
+                font-size: 1rem;
+                padding: 0.8rem 1rem;
+            }
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello World</h1>
+<main class="card" id="app">
+    <div class="header">
+        <div class="header-left">
+            <div class="avatar-wrapper">
+                <img src="" alt="avatar" class="avatar" id="avatar">
+                <!-- Ты нашел утку! 🦆 -->
+            </div>
+            <h1>vickkct</h1>
+        </div>
+        <div class="header-contacts" id="headerContacts">
+            <!-- Контакты будут вставлены сюда -->
+        </div>
+    </div>
+
+    <div class="greeting">
+        <h2>Привет! <span>🎉</span></h2>
+        <p>
+            <span id="age"></span> y.o, СПб. Учусь на программиста-аналитика, однако обычно страдаю веб разработкой.
+            Работаю в основном в сфере образования, но иногда и как программист. А еще я увлекаюсь вязанием, смотрю аниме и читаю книжки.
+        </p>
+    </div>
+
+    <div id="links-container">
+        <!-- Соцсети будут вставлены сюда -->
+    </div>
+
+    <div id="about-container">
+        <!-- Будет вставлен аккордеон "Обо мне как о программисте" -->
+    </div>
+</main>
+
+<script>
+    // --- Аватарка: сначала дефолтная, потом пробуем из ТГ ---
+    const avatar = document.getElementById('avatar');
+    const username = 'vickkct';
+    let defaultAvatarPath = "defaultAvatar.png";
+
+    // Функция для показа эмодзи (если нет даже дефолтной)
+    function showEmojiFallback() {
+        avatar.style.display = 'none';
+        const existingEmoji = avatar.parentNode.querySelector('.avatar:not(img)');
+        if (!existingEmoji) {
+            const emoji = document.createElement('span');
+            emoji.className = 'avatar';
+            emoji.textContent = '👾';
+            emoji.style.fontSize = '2.6rem';
+            emoji.style.lineHeight = '1';
+            emoji.style.filter = 'drop-shadow(0 4px 12px rgba(124, 58, 237, 0.2))';
+            emoji.style.position = 'relative';
+            emoji.style.zIndex = '1';
+            avatar.parentNode.insertBefore(emoji, avatar);
+        }
+    }
+
+    // Функция для показа дефолтной авы из файла
+    function showDefaultAvatar(defaultPath) {
+        avatar.src = defaultPath;
+        avatar.style.display = 'block';
+        const emoji = avatar.parentNode.querySelector('.avatar:not(img)');
+        if (emoji) {
+            emoji.remove();
+        }
+    }
+
+    // Показываем дефолтную аву (если есть) или эмодзи
+    function showInitialAvatar(defaultAvatarPath) {
+        if (defaultAvatarPath) {
+            // Пробуем загрузить дефолтную аву
+            const defaultImg = new Image();
+            defaultImg.src = defaultAvatarPath;
+            defaultImg.onload = function() {
+                showDefaultAvatar(defaultAvatarPath);
+                // После загрузки дефолтной авы пробуем загрузить из ТГ
+                loadTelegramAvatar();
+            };
+            defaultImg.onerror = function() {
+                // Если дефолтная ава не загрузилась — эмодзи
+                showEmojiFallback();
+                // Всё равно пробуем загрузить из ТГ
+                loadTelegramAvatar();
+            };
+        } else {
+            // Если дефолтной нет — эмодзи
+            showEmojiFallback();
+            // Пробуем загрузить из ТГ
+            loadTelegramAvatar();
+        }
+    }
+
+    let avatarLoaded = false;
+    let timeoutId = null;
+    let tgAvatar = null;
+
+    function loadTelegramAvatar() {
+        tgAvatar = new Image();
+        tgAvatar.src = `https://t.me/i/userpic/320/${username}.jpg`;
+
+        tgAvatar.onload = function() {
+            avatarLoaded = true;
+
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+                timeoutId = null;
+            }
+
+            // Заменяем на аву из ТГ
+            const emoji = avatar.parentNode.querySelector('.avatar:not(img)');
+            if (emoji) {
+                emoji.remove();
+            }
+            avatar.src = tgAvatar.src;
+            avatar.style.display = 'block';
+            tgAvatar = null;
+        };
+
+        tgAvatar.onerror = function() {
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+                timeoutId = null;
+            }
+            tgAvatar = null;
+            // Оставляем то, что уже есть (дефолтную аву или эмодзи)
+        };
+    }
+
+    // Таймаут на случай, если запрос к ТГ зависнет (5 секунд)
+    timeoutId = setTimeout(() => {
+        if (!avatarLoaded) {
+            if (tgAvatar) {
+                tgAvatar.src = '';
+                tgAvatar.onload = null;
+                tgAvatar.onerror = null;
+                tgAvatar = null;
+            }
+            // Оставляем то, что уже есть (дефолтную аву или эмодзи)
+        }
+        timeoutId = null;
+    }, 2000);
+
+    // Функция для вычисления возраста
+    function calculateAge(birthday) {
+        const birthDate = new Date(birthday);
+        const today = new Date();
+
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+        const dayDiff = today.getDate() - birthDate.getDate();
+
+        // Проверяем, был ли уже день рождения в этом году
+        if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+            age--;
+        }
+
+        // Проверяем, сегодня ли день рождения
+        const isBirthday = monthDiff === 0 && dayDiff === 0;
+
+        return { age, isBirthday };
+    }
+
+    async function loadConfig() {
+        try {
+            const response = await fetch('config.json');
+            const config = await response.json();
+
+            // --- Применяем тему ---
+            const primaryColor = config.theme?.primaryColor || '#7c3aed';
+            document.documentElement.style.setProperty('--primary-color', primaryColor);
+
+            const avatarGlowColor = config.theme?.avatarBorderColor || primaryColor;
+            document.documentElement.style.setProperty('--avatar-border-color', avatarGlowColor);
+
+            // Внутри loadConfig, после загрузки config:
+            const birthday = config.birthday;
+            if (birthday) {
+                const { age, isBirthday } = calculateAge(birthday);
+                const ageElement = document.getElementById('age');
+                if (isBirthday) {
+                    ageElement.textContent = `${age} (кстати сегодня у меня день рождения!)`;
+                } else {
+                    ageElement.textContent = age;
+                }
+            }
+
+            // --- Контакты в шапке ---
+            const headerContacts = document.getElementById('headerContacts');
+            if (config.contacts?.length) {
+                headerContacts.innerHTML = config.contacts.map(link => `
+                    <a href="${link.url}" class="contact-link">
+                        ${link.icon} ${link.name}
+                    </a>
+                `).join('');
+            }
+
+            // --- Соцсети ---
+            const container = document.getElementById('links-container');
+            if (config.socials?.length) {
+                container.innerHTML = `
+                    <div class="links-section">
+                        <h3>🌐 Ещё я есть здесь:</h3>
+                        <div class="links-grid">
+                            ${config.socials.map(link => `
+                                <a href="${link.url}" class="link-item ${link.name.toLowerCase().replace('!', '')}">
+                                    <i>${link.icon}</i> ${link.name}
+                                </a>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            // --- Аккордеон "Обо мне как о программисте" ---
+            const aboutContainer = document.getElementById('about-container');
+
+            let aboutHtml = `
+                <button class="about-toggle" id="aboutToggle">
+                    <span>💻 Обо мне как о программисте</span>
+                    <span class="arrow">▼</span>
+                </button>
+                <div class="about-content" id="aboutContent">
+            `;
+
+            // --- Навыки ---
+            if (config.skills && Object.keys(config.skills).length) {
+                aboutHtml += `
+                    <div class="skills-section">
+                        <h3>🛠️ Навыки</h3>
+                        <div class="skills-grid">
+                            ${Object.entries(config.skills).map(([category, items]) => `
+                                <div class="skill-category">
+                                    <div class="category-name">${category}</div>
+                                    <div class="skill-tags">
+                                        ${items.map(item => `
+                                            <span class="skill-tag">${item}</span>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            // --- Разделитель ---
+            if (config.skills && Object.keys(config.skills).length && config.projects?.length) {
+                aboutHtml += `<hr class="about-divider">`;
+            }
+
+            // --- Проекты ---
+            if (config.projects?.length) {
+                aboutHtml += `
+                    <div class="projects-section">
+                        <h3>🚀 Проекты</h3>
+                        <p class="projects-description">
+                            Все проекты закрытые для использования, но вы можете все равно на них взглянуть, а может быть и предложить мне работу
+                        </p>
+                `;
+
+                config.projects.forEach(project => {
+                    aboutHtml += `
+                        <div class="project-card">
+                            <div class="project-name">${project.name}</div>
+                            <div class="project-description">${project.description}</div>
+                    `;
+
+                    if (project.images?.length) {
+                        aboutHtml += `
+                            <div class="project-images">
+                                ${project.images.map(img => `
+                                    <img src="${img}" alt="${project.name}" loading="lazy">
+                                `).join('')}
+                            </div>
+                        `;
+                    }
+
+                    if (project.url) {
+                        aboutHtml += `
+                            <a href="${project.url}" target="_blank" class="project-link">
+                                🔗 Посмотреть проект →
+                            </a>
+                        `;
+                    }
+
+                    aboutHtml += `</div>`;
+                });
+
+                aboutHtml += `</div>`;
+            } else {
+                aboutHtml += `
+                    <div class="projects-section">
+                        <h3>🚀 Проекты</h3>
+                        <div class="no-projects">
+                            Пока нет проектов, но скоро появятся! 🚀
+                        </div>
+                    </div>
+                `;
+            }
+
+            aboutHtml += `
+                </div>
+            `;
+
+            aboutContainer.innerHTML = aboutHtml;
+
+            // --- Обработчик аккордеона ---
+            const toggleBtn = document.getElementById('aboutToggle');
+            const content = document.getElementById('aboutContent');
+            const arrow = toggleBtn?.querySelector('.arrow');
+
+            if (toggleBtn && content && arrow) {
+                toggleBtn.addEventListener('click', () => {
+                    content.classList.toggle('open');
+                    arrow.classList.toggle('open');
+                });
+            }
+
+            console.log('✅ Конфиг загружен');
+        } catch (error) {
+            console.warn('⚠️ Не удалось загрузить config.json');
+            document.getElementById('about-container').innerHTML = `
+                <div style="color: #8a7e9e; padding: 1rem; text-align: center; margin-top: 2rem;">
+                    ⚠️ Не удалось загрузить данные. Проверьте файл config.json
+                </div>
+            `;
+        }
+    }
+
+    loadConfig();
+    showInitialAvatar(defaultAvatarPath);
+</script>
 </body>
 </html>
